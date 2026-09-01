@@ -19,6 +19,9 @@
       <span><strong>CONTEXT LAB</strong><small>DLP TRIAGE BENCH</small></span>
     </a>
     <nav class="header-actions" aria-label="Workspace actions">
+      <button class="button button-quiet" id="viewContextButton" type="button">
+        <i data-lucide="folder-tree"></i><span>View context</span>
+      </button>
       <button class="button button-quiet" id="copyPromptButton" type="button">
         <i data-lucide="copy"></i><span>Copy prompt</span>
       </button>
@@ -79,6 +82,21 @@
           <i data-lucide="scan-text"></i><span>Parse response</span>
         </button>
       </div>
+    </form>
+  </dialog>
+
+  <dialog class="import-dialog context-dialog" id="contextDialog">
+    <form method="dialog" class="dialog-shell">
+      <div class="dialog-header">
+        <div>
+          <span class="eyebrow">CONTEXT BASE</span>
+          <h2>Folders behind each run</h2>
+        </div>
+        <button class="icon-button" value="cancel" type="submit" aria-label="Close dialog" title="Close">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="context-runs" id="contextRuns"></div>
     </form>
   </dialog>
 

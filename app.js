@@ -62,9 +62,26 @@ const ALERTS = [
 ];
 
 const RUNS = {
-  baseline: { label: "Baseline", subtitle: "NO CONTEXT", agent: "triager-baseline" },
-  bad: { label: "Bad context", subtitle: "KNOWLEDGE DUMP", agent: "triager-bad" },
-  good: { label: "Good context", subtitle: "CURATED CONTEXT", agent: "triager-good" }
+  baseline: {
+    label: "Baseline", subtitle: "NO CONTEXT", agent: "triager-baseline",
+    context: [{ folder: "alerts/", note: "Only the 12 alerts being triaged. No organizational knowledge.", files: [] }]
+  },
+  bad: {
+    label: "Bad context", subtitle: "KNOWLEDGE DUMP", agent: "triager-bad",
+    context: [
+      { folder: "alerts/", note: "The 12 alerts being triaged.", files: [] },
+      { folder: "context-bad/", note: "Unstructured, uncurated notes.", files: ["knowledge-dump.md"] }
+    ]
+  },
+  good: {
+    label: "Good context", subtitle: "CURATED CONTEXT", agent: "triager-good",
+    context: [
+      { folder: "alerts/", note: "The 12 alerts being triaged.", files: [] },
+      { folder: "context-good/", note: "Map of what exists and how to use it.", files: ["README.md", "glossary.md"] },
+      { folder: "context-good/patterns/", note: "Documented false-positive rules with counterexamples.", files: ["approved-workflows.md", "business-contact-data.md", "documentation-samples.md", "lookalike-identifiers.md", "placeholder-secrets.md", "synthetic-test-data.md"] },
+      { folder: "context-good/examples/", note: "Labeled, reasoned past cases.", files: ["CASE-001.md", "CASE-002.md", "CASE-003.md", "CASE-004.md", "CASE-005.md", "CASE-006.md", "CASE-007.md", "CASE-008.md", "CASE-009.md", "CASE-010.md"] }
+    ]
+  }
 };
 
 const PROMPT = `Triage all alerts in the alerts/ folder. For each one, output a table row:
@@ -92,6 +109,9 @@ const elements = {
   importDialog: document.querySelector("#importDialog"),
   importText: document.querySelector("#importText"),
   parseImportButton: document.querySelector("#parseImportButton"),
+  viewContextButton: document.querySelector("#viewContextButton"),
+  contextDialog: document.querySelector("#contextDialog"),
+  contextRuns: document.querySelector("#contextRuns"),
   toast: document.querySelector("#toast")
 };
 
@@ -220,6 +240,20 @@ function renderProgress() {
   elements.scoreButton.querySelector("span").textContent = run.scored ? "Rescore run" : "Score run";
 }
 
+function renderContextRuns() {
+  elements.contextRuns.innerHTML = Object.entries(RUNS).map(([key, run]) => `
+    <article class="context-run ${key === state.activeRun ? "active" : ""}">
+      <div class="context-run-header"><strong>${run.label}</strong><span>${run.subtitle}</span></div>
+      ${run.context.map(entry => `
+        <div class="context-folder">
+          <code>${entry.folder}</code>
+          <small>${escapeHtml(entry.note)}</small>
+          ${entry.files.length ? `<ul>${entry.files.map(file => `<li>${file}</li>`).join("")}</ul>` : ""}
+        </div>`).join("")}
+    </article>`).join("");
+  if (window.lucide) window.lucide.createIcons();
+}
+
 function renderComparison() {
   elements.workspace.hidden = comparisonVisible;
   elements.comparison.hidden = !comparisonVisible;
@@ -328,6 +362,10 @@ elements.copyPromptButton.addEventListener("click", async () => {
 
 elements.importButton.addEventListener("click", () => elements.importDialog.showModal());
 elements.parseImportButton.addEventListener("click", parseImport);
+elements.viewContextButton.addEventListener("click", () => {
+  renderContextRuns();
+  elements.contextDialog.showModal();
+});
 elements.scoreButton.addEventListener("click", () => {
   activeRun().scored = true;
   saveState();

@@ -272,6 +272,22 @@ button { color: inherit; }
 .dialog-note { color: var(--muted); font-size: 12px; }
 .dialog-actions { justify-content: flex-end; margin-top: 20px; }
 
+.context-dialog { width: min(760px, calc(100% - 28px)); }
+.context-runs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-height: 60vh; overflow-y: auto; }
+.context-run { padding: 14px; border: 1px solid var(--line); background: #f8f8f4; }
+.context-run.active { border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink); background: var(--surface); }
+.context-run-header { display: flex; flex-direction: column; margin-bottom: 12px; }
+.context-run-header span { margin-top: 3px; color: var(--muted); font: 500 10px "DM Mono", monospace; }
+.context-folder { margin-bottom: 12px; }
+.context-folder:last-child { margin-bottom: 0; }
+.context-folder code { font-family: "DM Mono", monospace; font-size: 12px; font-weight: 700; }
+.context-folder small { display: block; margin-top: 3px; color: var(--muted); line-height: 1.4; }
+.context-folder ul { margin: 8px 0 0; padding-left: 16px; font: 400 11px "DM Mono", monospace; line-height: 1.7; }
+
+@media (max-width: 760px) {
+  .context-runs { grid-template-columns: 1fr; max-height: 50vh; }
+}
+
 .toast { position: fixed; right: 24px; bottom: 24px; z-index: 10; max-width: min(380px, calc(100% - 48px)); padding: 13px 17px; color: #fff; background: var(--ink); box-shadow: var(--shadow); opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity 180ms ease, transform 180ms ease; }
 .toast.visible { opacity: 1; transform: translateY(0); }
 

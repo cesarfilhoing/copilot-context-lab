@@ -282,7 +282,10 @@ button { color: inherit; }
 .context-folder:last-child { margin-bottom: 0; }
 .context-folder code { font-family: "DM Mono", monospace; font-size: 12px; font-weight: 700; }
 .context-folder small { display: block; margin-top: 3px; color: var(--muted); line-height: 1.4; }
-.context-folder ul { margin: 8px 0 0; padding-left: 16px; font: 400 11px "DM Mono", monospace; line-height: 1.7; }
+.context-folder ul { margin: 8px 0 0; padding-left: 0; list-style: none; font: 400 11px "DM Mono", monospace; line-height: 1.7; }
+.context-file-button { padding: 0; border: 0; background: transparent; color: var(--blue); font: 400 11px "DM Mono", monospace; text-decoration: underline; cursor: pointer; }
+.context-file-button:hover { color: var(--ink); }
+.context-file-content { margin: 6px 0 10px; padding: 10px; max-height: 260px; overflow: auto; border: 1px solid var(--line); background: var(--paper); white-space: pre-wrap; font-size: 11px; line-height: 1.5; }
 
 @media (max-width: 760px) {
   .context-runs { grid-template-columns: 1fr; max-height: 50vh; }

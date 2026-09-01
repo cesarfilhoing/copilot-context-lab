@@ -248,10 +248,30 @@ function renderContextRuns() {
         <div class="context-folder">
           <code>${entry.folder}</code>
           <small>${escapeHtml(entry.note)}</small>
-          ${entry.files.length ? `<ul>${entry.files.map(file => `<li>${file}</li>`).join("")}</ul>` : ""}
+          ${entry.files.length ? `<ul>${entry.files.map(file => `<li><button type="button" class="context-file-button" data-path="${entry.folder}${file}">${file}</button><pre class="context-file-content" hidden></pre></li>`).join("")}</ul>` : ""}
         </div>`).join("")}
     </article>`).join("");
   if (window.lucide) window.lucide.createIcons();
+}
+
+async function toggleContextFile(button) {
+  const pre = button.nextElementSibling;
+  if (!pre.hidden) {
+    pre.hidden = true;
+    return;
+  }
+  if (!pre.textContent) {
+    pre.textContent = "Loading…";
+    pre.hidden = false;
+    try {
+      const response = await fetch(button.dataset.path);
+      pre.textContent = response.ok ? await response.text() : `Could not load ${button.dataset.path} (${response.status}).`;
+    } catch {
+      pre.textContent = `Could not load ${button.dataset.path}. Serve this page over http(s) for file fetches to work.`;
+    }
+    return;
+  }
+  pre.hidden = false;
 }
 
 function renderComparison() {
@@ -365,6 +385,11 @@ elements.parseImportButton.addEventListener("click", parseImport);
 elements.viewContextButton.addEventListener("click", () => {
   renderContextRuns();
   elements.contextDialog.showModal();
+});
+
+elements.contextRuns.addEventListener("click", event => {
+  const button = event.target.closest(".context-file-button");
+  if (button) toggleContextFile(button);
 });
 elements.scoreButton.addEventListener("click", () => {
   activeRun().scored = true;

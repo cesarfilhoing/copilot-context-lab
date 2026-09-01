@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive scoring interface for the Copilot Context Lab.">
+  <title>Context Lab | DLP Triage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="#" aria-label="Context Lab home">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span><strong>CONTEXT LAB</strong><small>DLP TRIAGE BENCH</small></span>
+    </a>
+    <nav class="header-actions" aria-label="Workspace actions">
+      <button class="button button-quiet" id="copyPromptButton" type="button">
+        <i data-lucide="copy"></i><span>Copy prompt</span>
+      </button>
+      <button class="button button-quiet" id="compareButton" type="button">
+        <i data-lucide="bar-chart-3"></i><span>Compare runs</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="run-bar" aria-label="Triage runs">
+      <div class="run-tabs" id="runTabs" role="tablist"></div>
+      <div class="run-actions">
+        <span class="progress-label" id="progressLabel"></span>
+        <button class="button button-outline" id="importButton" type="button">
+          <i data-lucide="clipboard-paste"></i><span>Import response</span>
+        </button>
+        <button class="button button-primary" id="scoreButton" type="button">
+          <i data-lucide="check-check"></i><span>Score run</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="workspace" id="workspace">
+      <aside class="alert-rail" aria-label="Alert queue">
+        <div class="rail-heading">
+          <span>ALERT QUEUE</span>
+          <strong>12</strong>
+        </div>
+        <div class="alert-list" id="alertList"></div>
+      </aside>
+
+      <article class="alert-detail" id="alertDetail" aria-live="polite"></article>
+
+      <aside class="decision-panel" id="decisionPanel" aria-label="Triage decision"></aside>
+    </section>
+
+    <section class="comparison" id="comparison" hidden></section>
+  </main>
+
+  <dialog class="import-dialog" id="importDialog">
+    <form method="dialog" class="dialog-shell">
+      <div class="dialog-header">
+        <div>
+          <span class="eyebrow">COPILOT OUTPUT</span>
+          <h2>Import triage table</h2>
+        </div>
+        <button class="icon-button" value="cancel" type="submit" aria-label="Close dialog" title="Close">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <label for="importText">Markdown response</label>
+      <textarea id="importText" rows="14" placeholder="| ALRT-1001 | FALSE POSITIVE | high | ... |"></textarea>
+      <p class="dialog-note">IDs and verdicts are required. Confidence and rationale are imported when present.</p>
+      <div class="dialog-actions">
+        <button class="button button-quiet" value="cancel" type="submit">Cancel</button>
+        <button class="button button-primary" id="parseImportButton" value="default" type="button">
+          <i data-lucide="scan-text"></i><span>Parse response</span>
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

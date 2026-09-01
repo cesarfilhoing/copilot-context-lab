@@ -11,7 +11,7 @@ Target: 60–90 minutes, groups of 2–4, each group with at least one laptop ru
 | Run 2 — bad context | 10 min | `triager-bad`. Before running, have groups *open* `knowledge-dump.md` and skim it for 2 minutes. Ask: "would YOU triage well from this?" |
 | Run 3 — good context | 10 min | `triager-good`. Have groups open one pattern file first and notice the structure: signals, counterexamples, cases. |
 | Scoring + debrief | 15 min | Open the answer key, fill the scoring sheet, discuss (talking points below). |
-| Build your own | 20–30 min | Each group writes 2–3 patterns for their own area using the template, points a chat mode at their folder, tests with 2–3 invented alerts. |
+| Build your own | 20–30 min | Each group writes 2–3 patterns for their own area using the template, points a custom agent at their folder, tests with 2–3 invented alerts. |
 
 ## Expected outcomes (calibrate, don't promise)
 
@@ -31,7 +31,7 @@ Results vary between runs — that is itself worth naming (non-determinism is an
 
 ## Practical notes
 
-- If custom modes don't show in the Copilot chat dropdown: `Developer: Reload Window`, and check the modes are in `.github/chatmodes/`.
+- If custom agents don't show in the Copilot agent dropdown: `Developer: Reload Window`, and check the agents are in `.github/agents/`.
 - If a model answers from memory of a previous run, start a new chat per run.
-- Keep groups from opening `facilitator/` early; the chat modes are instructed to refuse it, but humans are curious.
+- Keep groups from opening `facilitator/` early; the custom agents are instructed to refuse it, but humans are curious.
 - If short on time, cut the build-your-own block to writing one pattern on paper with the template and sharing it aloud.

@@ -23,12 +23,12 @@ context-good/      the RIGHT way (curated patterns, labeled examples, glossary)
 docs/              the theory: how to architect context for generative AI
 templates/         a template to build patterns for YOUR own area
 facilitator/       answer key and run guide — DO NOT open until the end
-.github/chatmodes/ three pre-built agents (baseline / bad / good)
+.github/agents/    three pre-built agents (baseline / bad / good)
 ```
 
 ## The three agents
 
-Open Copilot Chat in VS Code and pick a mode from the mode dropdown:
+Open Copilot Chat in VS Code and pick an agent from the agent dropdown:
 
 | Mode | Context it uses | What it demonstrates |
 |---|---|---|
@@ -36,13 +36,13 @@ Open Copilot Chat in VS Code and pick a mode from the mode dropdown:
 | `triager-bad` | `context-bad/` | why "just dump everything in a file" fails |
 | `triager-good` | `context-good/` | what curated, structured context buys you |
 
-If the custom modes don't appear, reload the VS Code window (`Developer: Reload Window`). The modes live in `.github/chatmodes/`.
+If the custom agents don't appear, reload the VS Code window (`Developer: Reload Window`). The agents live in `.github/agents/`.
 
 ## Workshop flow
 
 ### Step 1 — Baseline (no context)
 
-Select `triager-baseline` and ask:
+Select the `triager-baseline` agent and ask:
 
 ```
 Triage all alerts in the alerts/ folder. For each one, output a table row:
@@ -53,11 +53,11 @@ Write down its verdicts. Notice how confident it sounds.
 
 ### Step 2 — The wrong way
 
-Select `triager-bad` and ask the exact same question. The agent now "has context": a 200-line knowledge dump full of pasted emails, contradictions, stale rules and noise. Watch what happens to its answers — and notice that it also just ingested a file containing (fictional) employee personal data that should never have been in a context store.
+Select the `triager-bad` agent and ask the exact same question. The agent now "has context": a 200-line knowledge dump full of pasted emails, contradictions, stale rules and noise. Watch what happens to its answers — and notice that it also just ingested a file containing (fictional) employee personal data that should never have been in a context store.
 
 ### Step 3 — The right way
 
-Select `triager-good` and ask the same question again. Same model, same alerts, same prompt. The only difference is that the context is curated: one file per false-positive pattern, labeled historical examples with rationale, and a glossary of internal systems.
+Select the `triager-good` agent and ask the same question again. Same model, same alerts, same prompt. The only difference is that the context is curated: one file per false-positive pattern, labeled historical examples with rationale, and a glossary of internal systems.
 
 ### Step 4 — Score it
 

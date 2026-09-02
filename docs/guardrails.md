@@ -8,8 +8,8 @@ Every guardrail sits on one of three rungs. Always know which rung yours is on.
 
 | Level | What it is | Example in this repo | Can the agent bypass it? |
 |---|---|---|---|
-| **1. Instructed** | A rule written in the prompt or agent instructions | "Never open `facilitator/`" in the chat modes | **Yes.** A determined user, a cleverly phrased request, or plain model error walks through it. Instructions shape behavior; they do not bound it. |
-| **2. Configured** | A capability the agent simply does not have | The `tools:` list in each chat mode grants read/search only, no edit, no terminal, no web | Only by a tooling bug. The agent cannot act outside its granted tools, no matter what the prompt says. |
+| **1. Instructed** | A rule written in the prompt or agent instructions | "Never open `facilitator/`" in the custom agents | **Yes.** A determined user, a cleverly phrased request, or plain model error walks through it. Instructions shape behavior; they do not bound it. |
+| **2. Configured** | A capability the agent simply does not have | The `tools:` list in each agent file grants read/search only, no edit, no terminal, no web | Only by a tooling bug. The agent cannot act outside its granted tools, no matter what the prompt says. |
 | **3. Enforced** | A control outside the agent entirely | Repo permissions, branch protection, DLP scanning the repo itself, network egress rules | No. It holds even if the model is fully compromised or replaced. |
 
 **Design rule: state it at level 1, remove the capability at level 2, verify at level 3.** If a guardrail matters and it exists only at level 1, you do not have a guardrail — you have a hope. Try it yourself: ask a triager mode nicely, then insistently, to open the answer key. That is the demo.
@@ -27,7 +27,7 @@ The agent's context, prompts and test data are a processing activity like any ot
 
 ### Layer 2 — Access (what it can reach)
 
-- **Least-privilege context.** Each agent reads only the folders its task needs. The three chat modes here are mutually excluded from each other's folders and from `facilitator/`.
+- **Least-privilege context.** Each agent reads only the folders its task needs. The three custom agents here are mutually excluded from each other's folders and from `facilitator/`.
 - **Least-privilege tools.** Grant capabilities, don't subtract them: start from nothing and add read/search. No edit, no terminal, no network for a triage task.
 - **Sanctioned platforms only.** Corporate Copilot licence, corporate repos. Personal AI accounts with company data are Layer 1's problem wearing a different hat.
 - Enforcement: `tools:` frontmatter (level 2), repo and workspace permissions (level 3).
